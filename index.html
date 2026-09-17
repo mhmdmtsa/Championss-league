@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>دوري أبطال أوروبا | الموسوعة التفاعلية</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#070b16;
+    --gold:#f5c451;
+    --gold-2:#e0a020;
+    --blue:#2b6cff;
+    --purple:#7b2ff7;
+    --text:#e9eefb;
+    --muted:#93a0bd;
+    --border:rgba(255,255,255,.10);
+    --card:rgba(255,255,255,.045);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+
+  body{
+    font-family:'Cairo', system-ui, -apple-system, sans-serif;
+    background:var(--bg);
+    color:var(--text);
+    min-height:100vh;
+    overflow-x:hidden;
+    line-height:1.7;
+  }
+
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(123,47,247,.30), transparent 42%),
+      radial-gradient(circle at 85% 15%, rgba(43,108,255,.25), transparent 42%),
+      radial-gradient(circle at 50% 95%, rgba(245,196,81,.14), transparent 45%),
+      #070b16;
+  }
+
+  /* ============ الهيدر ============ */
+  .hero{
+    position:relative;
+    text-align:center;
+    padding:70px 20px 40px;
+  }
+
+  .hero .badge-top{
+    display:inline-block;
+    font-size:.78rem;
+    letter-spacing:1px;
+    padding:7px 18px;
+    border-radius:50px;
+    border:1px solid rgba(245,196,81,.4);
+    color:var(--gold);
+    background:rgba(245,196,81,.08);
+    margin-bottom:20px;
+  }
+
+  .hero h1{
+    font-size:clamp(1.9rem, 5.5vw, 3.6rem);
+    font-weight:900;
+    line-height:1.3;
+    background:linear-gradient(100deg,#f5c451 0%, #ffffff 45%, #7b2ff7 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    margin-bottom:16px;
+  }
+
+  .hero p{
+    max-width:640px;
+    margin:0 auto;
+    color:var(--muted);
+    font-size:clamp(.9rem, 2.4vw, 1.05rem);
+  }
+
+  .stars{
+    font-size:1.1rem;
+    letter-spacing:8px;
+    color:var(--gold);
+    margin-top:18px;
+    opacity:.85;
+    animation:glow 3s ease-in-out infinite;
+  }
+
+  @keyframes glow{
+    0%,100%{opacity:.5; text-shadow:0 0 0 transparent}
+    50%{opacity:1; text-shadow:0 0 18px rgba(245,196,81,.7)}
+  }
+
+  /* ============ التبويبات ============ */
+  .tabs{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:10px;
+    max-width:1100px;
+    margin:0 auto;
+    padding:0 16px 26px;
+  }
+
+  .tab{
+    font-family:inherit;
+    font-size:.9rem;
+    font-weight:700;
+    color:var(--muted);
+    background:rgba(255,255,255,.04);
+    border:1px solid var(--border);
+    border-radius:50px;
+    padding:10px 20px;
+    cursor:pointer;
+    transition:all .3s cubic-bezier(.4,0,.2,1);
+  }
+
+  .tab:hover{
+    color:#fff;
+    border-color:rgba(245,196,81,.5);
+    transform:translateY(-2px);
+  }
+
+  .tab.active{
+    background:linear-gradient(135deg,var(--gold),var(--gold-2));
+    color:#0a0e1a;
+    border-color:transparent;
+    box-shadow:0 8px 24px rgba(245,196,81,.30);
+  }
+
+  /* ============ البحث ============ */
+  .search-wrap{
+    position:relative;
+    max-width:520px;
+    margin:0 auto 34px;
+    padding:0 16px;
+  }
+
+  .search-wrap input{
+    width:100%;
+    font-family:inherit;
+    font-size:.98rem;
+    color:#fff;
+    background:rgba(255,255,255,.06);
+    border:1px solid var(--border);
+    border-radius:50px;
+    padding:14px 50px 14px 20px;
+    outline:none;
+    transition:all .3s;
+  }
+
+  .search-wrap input::placeholder{color:#6d7a95}
+
+  .search-wrap input:focus{
+    border-color:var(--gold);
+    background:rgba(255,255,255,.09);
+    box-shadow:0 0 0 4px rgba(245,196,81,.10);
+  }
+
+  .search-wrap .ico{
+    position:absolute;
+    top:50%;
+    right:34px;
+    transform:translateY(-50%);
+    opacity:.55;
+    pointer-events:none;
+  }
+
+  /* ============ رأس القسم ============ */
+  .sec-head{
+    max-width:1200px;
+    margin:0 auto 26px;
+    padding:0 20px;
+    text-align:center;
+    animation:fadeUp .5s ease both;
+  }
+
+  .sec-head h2{
+    font-size:clamp(1.3rem, 3.6vw, 1.9rem);
+    font-weight:900;
+    margin-bottom:8px;
+  }
+
+  .sec-head p{
+    color:var(--muted);
+    font-size:.92rem;
+    max-width:680px;
+    margin:0 auto;
+  }
+
+  /* ============ الشبكة والبطاقات ============ */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(265px, 1fr));
+    gap:20px;
+    max-width:1200px;
+    margin:0 auto;
+    padding:0 20px 70px;
+  }
+
+  .card{
+    position:relative;
+    overflow:hidden;
+    background:linear-gradient(160deg, rgba(255,255,255,.075), rgba(255,255,255,.018));
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px 20px 20px;
+    transition:transform .35s cubic-bezier(.4,0,.2,1), box-shadow .35s, border-color .35s;
+    animation:fadeUp .5s ease both;
+    backdrop-filter:blur(6px);
+  }
+
+  .card::after{
+    content:'';
+    position:absolute;
+    top:0; right:0; left:0;
+    height:3px;
+    background:linear-gradient(90deg, var(--gold), var(--purple));
+    opacity:0;
+    transition:opacity .35s;
+  }
+
+  .card:hover{
+    transform:translateY(-7px);
+    border-color:rgba(245,196,81,.35);
+    box-shadow:0 20px 45px rgba(0,0,0,.5);
+  }
+
+  .card:hover::after{opacity:1}
+
+  .card-num{
+    position:absolute;
+    top:8px;
+    left:14px;
+    font-size:3.2rem;
+    font-weight:900;
+    color:rgba(255,255,255,.045);
+    line-height:1;
+    pointer-events:none;
+    user-select:none;
+  }
+
+  .card-top{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:14px;
+  }
+
+  .card-icon{
+    font-size:1.7rem;
+    filter:drop-shadow(0 3px 8px rgba(0,0,0,.5));
+  }
+
+  .card-badge{
+    font-size:.74rem;
+    font-weight:700;
+    color:var(--gold);
+    background:rgba(245,196,81,.10);
+    border:1px solid rgba(245,196,81,.28);
+    border-radius:50px;
+    padding:4px 12px;
+    white-space:nowrap;
+  }
+
+  .card-title{
+    font-size:1.12rem;
+    font-weight:800;
+    margin-bottom:4px;
+    color:#fff;
+  }
+
+  .card-meta{
+    font-size:.8rem;
+    color:var(--gold);
+    opacity:.85;
+    margin-bottom:10px;
+    font-weight:600;
+  }
+
+  .card-desc{
+    font-size:.86rem;
+    color:var(--muted);
+    line-height:1.85;
+  }
+
+  /* ============ النظرة العامة ============ */
+  .stats{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(160px, 1fr));
+    gap:16px;
+    max-width:1200px;
+    margin:0 auto 40px;
+    padding:0 20px;
+  }
+
+  .stat{
+    text-align:center;
+    padding:24px 14px;
+    border-radius:18px;
+    border:1px solid var(--border);
+    background:linear-gradient(160deg, rgba(255,255,255,.07), rgba(255,255,255,.015));
+    transition:transform .3s, border-color .3s;
+    animation:fadeUp .5s ease both;
+  }
+
+  .stat:hover{
+    transform:translateY(-5px);
+    border-color:rgba(245,196,81,.4);
+  }
+
+  .stat-num{
+    font-size:clamp(1.8rem, 5vw, 2.5rem);
+    font-weight:900;
+    background:linear-gradient(135deg,var(--gold),#fff);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    line-height:1.2;
+  }
+
+  .stat-label{
+    font-size:.82rem;
+    color:var(--muted);
+    margin-top:6px;
+  }
+
+  .stat-label small{
+    display:block;
+    color:#fff;
+    font-weight:700;
+    font-size:.86rem;
+    margin-top:2px;
+  }
+
+  .intro{
+    max-width:900px;
+    margin:0 auto 46px;
+    padding:28px 26px;
+    border-radius:20px;
+    border:1px solid var(--border);
+    background:rgba(255,255,255,.03);
+    animation:fadeUp .5s ease both;
+  }
+
+  .intro h2{
+    font-size:1.3rem;
+    font-weight:900;
+    margin-bottom:14px;
+    color:var(--gold);
+  }
+
+  .intro p{
+    color:#c3cde3;
+    font-size:.93rem;
+    margin-bottom:12px;
+  }
+
+  .intro p:last-child{margin-bottom:0}
+
+  .quick-title{
+    text-align:center;
+    font-size:1.2rem;
+    font-weight:900;
+    margin-bottom:20px;
+  }
+
+  .quick-grid{
+    display:flex;
+    flex-wrap:wrap;
+    justify-content:center;
+    gap:12px;
+    max-width:900px;
+    margin:0 auto 70px;
+    padding:0 20px;
+  }
+
+  .quick-btn{
+    font-family:inherit;
+    font-size:.9rem;
+    font-weight:700;
+    color:var(--text);
+    background:rgba(255,255,255,.05);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:14px 22px;
+    cursor:pointer;
+    transition:all .3s;
+  }
+
+  .quick-btn:hover{
+    background:linear-gradient(135deg, rgba(245,196,81,.18), rgba(123,47,247,.18));
+    border-color:rgba(245,196,81,.5);
+    transform:translateY(-3px);
+  }
+
+  /* ============ لا نتائج ============ */
+  .empty{
+    text-align:center;
+    padding:70px 20px;
+    color:var(--muted);
+    animation:fadeUp .4s ease both;
+  }
+
+  .empty .big{font-size:3rem; display:block; margin-bottom:14px}
+
+  /* ============ الفوتر ============ */
+  footer{
+    text-align:center;
+    padding:34px 20px 44px;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+    font-size:.82rem;
+  }
+
+  footer span{color:var(--gold); font-weight:700}
+
+  /* ============ حركات ============ */
+  @keyframes fadeUp{
+    from{opacity:0; transform:translateY(18px)}
+    to{opacity:1; transform:translateY(0)}
+  }
+
+  /* ============ استجابة ============ */
+  @media (max-width:520px){
+    .hero{padding:48px 16px 30px}
+    .tab{font-size:.82rem; padding:9px 15px}
+    .grid{grid-template-columns:1fr; gap:16px}
+    .card-num{font-size:2.4rem}
+  }
+</style>
+</head>
+<body>
+
+  <!-- ================= الهيدر ================= -->
+  <header class="hero">
+    <span class="badge-top">⚽ UEFA CHAMPIONS LEAGUE</span>
+    <h1>دوري أبطال أوروبا<br>موسوعة الأبطال والأساطير</h1>
+    <p>رحلة تفاعلية في تاريخ أعظم بطولة للأندية في العالم: الأندية، المدربون، النجوم، والليالي التي لا تُنسى.</p>
+    <div class="stars">★ ★ ★ ★ ★</div>
+  </header>
+
+  <!-- ================= التبويبات ================= -->
+  <nav class="tabs" id="tabs"></nav>
+
+  <!-- ================= البحث ================= -->
+  <div class="search-wrap" id="searchWrap">
+    <span class="ico">🔍</span>
+    <input type="text" id="searchInput" placeholder="ابحث بالاسم أو الدولة أو الوصف..." autocomplete="off">
+  </div>
+
+  <!-- ================= المحتوى ================= -->
+  <main id="content"></main>
+
+  <!-- ================= الفوتر ================= -->
+  <footer>
+    <p>صُمِّم هذا النظام لأغراض <span>تعليمية وعرضية</span> · البيانات محدَّثة حتى موسم 2024/2025</p>
+  </footer>
+
+<script>
+/* =========================================================
+   1) البيانات
+   ========================================================= */
+
+const clubs = [
+  {icon:"👑", name:"ريال مدريد", badge:"15 لقباً", meta:"إسبانيا 🇪🇸", desc:"النادي الأكثر تتويجاً في التاريخ، فاز بأول خمس نسخ متتالية (1956–1960) وبثلاثية تاريخية 2016–2018."},
+  {icon:"🔴", name:"ميلان", badge:"7 ألقاب", meta:"إيطاليا 🇮🇹", desc:"الروسونيري، سيّد أوروبا في الثمانينات والتسعينات، وآخر تتويج له عام 2007 على حساب ليفربول."},
+  {icon:"🔵", name:"بايرن ميونخ", badge:"6 ألقاب", meta:"ألمانيا 🇩🇪", desc:"العملاق البافاري، حقق الثلاثية مرتين (2013 و2020) ووصل لنهائيات متتالية في السبعينات."},
+  {icon:"🔺", name:"ليفربول", badge:"6 ألقاب", meta:"إنجلترا 🇬🇧", desc:"الريدز، صاحب معجزة إسطنبول 2005، وعاد لمنصة التتويج عام 2019 بقيادة يورغن كلوب."},
+  {icon:"🔵", name:"برشلونة", badge:"5 ألقاب", meta:"إسبانيا 🇪🇸", desc:"البلوغرانا، أول نادٍ يفوز بالبطولة مرتين في عصر دوري الأبطال (2009 و2011) بفلسفة غوارديولا."},
+  {icon:"⚪", name:"أياكس أمستردام", badge:"4 ألقاب", meta:"هولندا 🇳🇱", desc:"مدرسة الكرة الشاملة، فاز بثلاث نسخ متتالية (1971–1973) بقيادة يوهان كرويف."},
+  {icon:"⚫", name:"إنتر ميلان", badge:"3 ألقاب", meta:"إيطاليا 🇮🇹", desc:"النيراتزوري، بطل 2010 بالثلاثية التاريخية تحت قيادة جوزيه مورينيو."},
+  {icon:"😈", name:"مانشستر يونايتد", badge:"3 ألقاب", meta:"إنجلترا 🇬🇧", desc:"الشياطين الحمر، أشهرها نهائي 1999 الشهير بالريمونتادا في الوقت القاتل أمام بايرن."},
+  {icon:"⚪", name:"يوفنتوس", badge:"لقبان", meta:"إيطاليا 🇮🇹", desc:"البيانكونيري، أول نادٍ يحقق البطولة بصيغة دوري المجموعات عام 1996."},
+  {icon:"🦅", name:"بنفيكا", badge:"لقبان", meta:"البرتغال 🇵🇹", desc:"بطل 1961 و1962 بقيادة أوزيبيو، وأحد أعرق أندية القارة العجوز."},
+  {icon:"🐉", name:"بورتو", badge:"لقبان", meta:"البرتغال 🇵🇹", desc:"صاحب مفاجأة 2004 مع مورينيو، وتُوّج أيضاً عام 1987 على حساب بايرن."},
+  {icon:"🦁", name:"تشيلسي", badge:"لقبان", meta:"إنجلترا 🇬🇧", desc:"توّج أول مرة في ميونخ 2012، ثم أعاد الإنجاز عام 2021 بقيادة توماس توخيل."}
+];
+
+const coaches = [
+  {icon:"🎩", name:"كارلو أنشيلوتي", badge:"5 ألقاب", meta:"إيطاليا 🇮🇹", desc:"أكثر مدرب تتويجاً في التاريخ: ميلان (2003، 2007) وريال مدريد (2014، 2022، 2024)."},
+  {icon:"🎯", name:"زين الدين زيدان", badge:"3 ألقاب", meta:"فرنسا 🇫🇷", desc:"أول مدرب يفوز باللقب ثلاث مرات متتالية في عصر دوري الأبطال (2016–2018) مع ريال مدريد."},
+  {icon:"🧠", name:"بيب غوارديولا", badge:"3 ألقاب", meta:"إسبانيا 🇪🇸", desc:"توّج مرتين مع برشلونة (2009، 2011) ومرة مع مانشستر سيتي (2023) ضمن ثلاثيته التاريخية."},
+  {icon:"🔥", name:"بوب بيزلي", badge:"3 ألقاب", meta:"إنجلترا 🇬🇧", desc:"أسطورة ليفربول الذي فاز بالبطولة أعوام 1977 و1978 و1981 بجيل لا يُنسى."},
+  {icon:"⚙️", name:"أوتومار هيتسفيلد", badge:"لقبان", meta:"ألمانيا 🇩🇪", desc:"الوحيد الذي توّج باللقب مع ناديين مختلفين: دورتموند 1997 وبايرن ميونخ 2001."},
+  {icon:"👔", name:"أليكس فيرغسون", badge:"لقبان", meta:"إسكتلندا 🇬🇧", desc:"قاد مانشستر يونايتد للتتويج عامي 1999 و2008 بعد مسيرة حافلة بالنهائيات."},
+  {icon:"😎", name:"جوزيه مورينيو", badge:"لقبان", meta:"البرتغال 🇵🇹", desc:"الاستثنائي، توّج مع بورتو 2004 ومع إنتر ميلان 2010 محققاً الثلاثية."},
+  {icon:"🎸", name:"يورغن كلوب", badge:"لقب", meta:"ألمانيا 🇩🇪", desc:"أعاد ليفربول إلى القمة الأوروبية عام 2019 بعد غياب 14 عاماً عن النهائي."},
+  {icon:"🦅", name:"لويس إنريكي", badge:"لقب", meta:"إسبانيا 🇪🇸", desc:"قاد برشلونة للتتويج عام 2015 بثلاثية الهجوم الشهير MSN."},
+  {icon:"🧤", name:"رافاييل بينيتيز", badge:"لقب", meta:"إسبانيا 🇪🇸", desc:"مهندس معجزة إسطنبول 2005 مع ليفربول في أول موسم له على رأس الجهاز الفني."}
+];
+
+const forwards = [
+  {icon:"🐐", name:"كريستيانو رونالدو", badge:"140 هدفاً", meta:"البرتغال 🇵🇹 · 5 ألقاب", desc:"الهداف التاريخي للبطولة وأكثر لاعب مشاركة، سجّل في 3 نهائيات وتوّج مع يونايتد وريال مدريد."},
+  {icon:"✨", name:"ليونيل ميسي", badge:"129 هدفاً", meta:"الأرجنتين 🇦🇷 · 4 ألقاب", desc:"هداف برشلونة التاريخي في البطولة، وسجّل 14 هدفاً في موسم 2011-12 القياسي."},
+  {icon:"💥", name:"روبرت ليفاندوفسكي", badge:"103 أهداف", meta:"بولندا 🇵🇱 · لقب 2020", desc:"من أسرع المهاجمين وصولاً للمئة هدف، وتوّج باللقب مع بايرن في ثلاثية 2020."},
+  {icon:"🎯", name:"كريم بنزيمة", badge:"90 هدفاً", meta:"فرنسا 🇫🇷 · 5 ألقاب", desc:"ثاني هدافي ريال مدريد التاريخيين في البطولة، وأحد أبطال نسخة 2022 الاستثنائية."},
+  {icon:"👑", name:"راؤول غونزاليس", badge:"71 هدفاً", meta:"إسبانيا 🇪🇸 · 3 ألقاب", desc:"كان الهداف التاريخي للبطولة قبل أن يتجاوزه ميسي ورونالدو، وسجّل في نهائيين."},
+  {icon:"⚡", name:"رود فان نيستلروي", badge:"56 هدفاً", meta:"هولندا 🇳🇱", desc:"هداف البطولة أعوام 2002 و2003 و2005، ومن أخطر المهاجمين داخل منطقة الجزاء."},
+  {icon:"🎨", name:"تييري هنري", badge:"50 هدفاً", meta:"فرنسا 🇫🇷 · لقب 2009", desc:"أسطورة آرسنال، توّج أخيراً مع برشلونة عام 2009 بعد سنوات من التألق الأوروبي."},
+  {icon:"🏅", name:"ألفريدو دي ستيفانو", badge:"49 هدفاً", meta:"الأرجنتين 🇦🇷 · 5 ألقاب", desc:"قائد ريال مدريد في العصر الذهبي، وسجّل في خمس نهائيات متتالية."},
+  {icon:"🐆", name:"فينيسيوس جونيور", badge:"هداف النهائيات", meta:"البرازيل 🇧🇷 · لقبان", desc:"سجّل في نهائي 2022 أمام ليفربول ونهائي 2024 أمام دورتموند."},
+  {icon:"🇪🇬", name:"محمد صلاح", badge:"هداف 2018", meta:"مصر 🇪🇬 · لقب 2019", desc:"أفضل لاعب أفريقي، قاد ليفربول لنهائيين متتاليين وتوّج باللقب عام 2019."}
+];
+
+const midfielders = [
+  {icon:"👑", name:"زين الدين زيدان", badge:"لقب 2002", meta:"فرنسا 🇫🇷", desc:"صاحب أجمل هدف في تاريخ النهائيات: تسديدة باليسرى في نهائي 2002 أمام باير ليفركوزن."},
+  {icon:"🎩", name:"لوكا مودريتش", badge:"6 ألقاب", meta:"كرواتيا 🇭🇷", desc:"أكثر لاعب تتويجاً باللقب في العصر الحديث مع ريال مدريد، والكرة الذهبية 2018."},
+  {icon:"🧠", name:"تشافي هيرنانديز", badge:"4 ألقاب", meta:"إسبانيا 🇪🇸", desc:"عقل برشلونة ومدير إيقاعه في العصر الذهبي، وأبرز ممثلي مدرسة التيكي تاكا."},
+  {icon:"⚽", name:"أندريس إنييستا", badge:"4 ألقاب", meta:"إسبانيا 🇪🇸", desc:"سجّل هدف الفوز في نهائي 2009 أمام مانشستر يونايتد وأبهر العالم بمهاراته."},
+  {icon:"❤️", name:"ستيفن جيرارد", badge:"لقب 2005", meta:"إنجلترا 🇬🇧", desc:"قائد ليفربول في معجزة إسطنبول، وافتتح التسجيل في نهائي 2005 الشهير."},
+  {icon:"🎼", name:"أندريا بيرلو", badge:"لقبان", meta:"إيطاليا 🇮🇹", desc:"مايسترو ميلان ويوفنتوس، وأحد أدق صانعي الكرات في تاريخ اللعبة."},
+  {icon:"🌪️", name:"كلارينس سيدورف", badge:"4 ألقاب", meta:"هولندا 🇳🇱", desc:"توّج باللقب مع ثلاثة أندية مختلفة: أياكس وميلان وريال مدريد."},
+  {icon:"💫", name:"كيفن دي بروين", badge:"لقب 2023", meta:"بلجيكا 🇧🇪", desc:"صانع أهداف مانشستر سيتي في الثلاثية التاريخية، وأحد أفضل الممررين في جيله."},
+  {icon:"🛡️", name:"روي كين", badge:"لقب 1999", meta:"إيرلندا 🇮🇪", desc:"قائد مانشستر يونايتد في نهائي كامب نو الأسطوري، ومثال القيادة والروح القتالية."},
+  {icon:"🎯", name:"أنخيل دي ماريا", badge:"لقب 2014", meta:"الأرجنتين 🇦🇷", desc:"رجل نهائي لشبونة، سجّل هدف التقدم وصنع آخر في ريمونتادا ريال مدريد."}
+];
+
+const defenders = [
+  {icon:"🐏", name:"سيرجيو راموس", badge:"4 ألقاب", meta:"إسبانيا 🇪🇸", desc:"صاحب هدف الدقيقة 93 في نهائي 2014 الذي غيّر التاريخ، وأحد أكثر المدافعين تسجيلاً."},
+  {icon:"🛡️", name:"باولو مالديني", badge:"5 ألقاب", meta:"إيطاليا 🇮🇹", desc:"رمز ميلان والدفاع الإيطالي، ولعب 8 نهائيات في مسيرة استثنائية."},
+  {icon:"👑", name:"فرانز بكنباور", badge:"3 ألقاب", meta:"ألمانيا 🇩🇪", desc:"القيصر، قاد بايرن ميونخ لثلاث بطولات متتالية في سبعينات القرن الماضي."},
+  {icon:"⚡", name:"روبرتو كارلوس", badge:"3 ألقاب", meta:"البرازيل 🇧🇷", desc:"أخطر ظهير أيسر في التاريخ، جمع بين السرعة والقوة والتسديدات الصاروخية."},
+  {icon:"💙", name:"كارليس بويول", badge:"3 ألقاب", meta:"إسبانيا 🇪🇸", desc:"قلب دفاع برشلونة وقائده، ومن أبرز رموز جيل التتويجات الأوروبية."},
+  {icon:"🏆", name:"فابيو كانافارو", badge:"الكرة الذهبية 2006", meta:"إيطاليا 🇮🇹", desc:"أول مدافع يفوز بالكرة الذهبية بعد مونديال 2006، وتوّج أوروبياً مع ريال مدريد."},
+  {icon:"🧱", name:"فيرجيل فان دايك", badge:"لقب 2019", meta:"هولندا 🇳🇱", desc:"أحدث ثورة في دفاع ليفربول، ونال جائزة أفضل لاعب في نهائي مدريد 2019."},
+  {icon:"🎯", name:"جيرارد بيكيه", badge:"3 ألقاب", meta:"إسبانيا 🇪🇸", desc:"مدافع برشلونة الذكي، سجّل في نصف نهائي 2009 وفي نهائي 2011."},
+  {icon:"🇲🇦", name:"أشرف حكيمي", badge:"لقب 2025", meta:"المغرب 🇲🇦", desc:"الظهير المغربي الذي توّج مع ريال مدريد وإنتر ثم باريس سان جيرمان في نهائي 2025."},
+  {icon:"🦁", name:"مارسيلو", badge:"5 ألقاب", meta:"البرازيل 🇧🇷", desc:"أكثر لاعب أجنبي تتويجاً باللقب مع ريال مدريد، وظهير هجومي لا يُقاوم."}
+];
+
+const years = [
+  {icon:"🏆", name:"1960 — نهائي القرن", badge:"ريال مدريد 7-3 آينتراخت", meta:"هامبدن بارك، غلاسكو", desc:"أعلى نهائي تسجيلاً في التاريخ، وقّع فيه بوشكاش أربعة أهداف ودي ستيفانو ثلاثة."},
+  {icon:"⏱️", name:"1999 — ريمونتادا كامب نو", badge:"مان يونايتد 2-1 بايرن", meta:"برشلونة", desc:"بايرن تقدّم مبكراً، لكن شيرينغهام وسولشاير سجّلا في الوقت بدل الضائع ليُهديا اللقب."},
+  {icon:"🌀", name:"2005 — معجزة إسطنبول", badge:"ليفربول 3-3 ميلان", meta:"أتاتورك، إسطنبول", desc:"ميلان تقدّم 3-0 في الشوط الأول، فردّ ليفربول بثلاثية في 6 دقائق وفاز بالركلات."},
+  {icon:"🥇", name:"2014 — اللا ديسيما", badge:"ريال مدريد 4-1 أتلتيكو", meta:"لشبونة", desc:"هدف راموس في الدقيقة 93 مدّد المباراة، ثم اكتسح الملكي الوقت الإضافي."},
+  {icon:"👑", name:"2017 — الدفاع عن اللقب", badge:"ريال مدريد 4-1 يوفنتوس", meta:"كارديف", desc:"أول فريق يدافع عن لقبه في عصر دوري الأبطال، مع ثنائية كريستيانو رونالدو."},
+  {icon:"🔥", name:"2019 — ريمونتادا أنفيلد", badge:"ليفربول 4-0 برشلونة", meta:"أنفيلد", desc:"برشلونة خسر 0-4 بعد تقدمه 3-0 ذهاباً، في واحدة من أعظم الريمونتادات."},
+  {icon:"⚡", name:"2022 — مسيرة الملكي المجنونة", badge:"ريال مدريد 1-0 ليفربول", meta:"سان دوني، باريس", desc:"أطاح ريال مدريد بباريس وتشيلسي وسيتي قبل أن يهزم ليفربول في النهائي."},
+  {icon:"💎", name:"2023 — ثلاثية مان سيتي", badge:"مان سيتي 1-0 إنتر", meta:"أتاتورك، إسطنبول", desc:"أكمل غوارديولا الثلاثية التاريخية (الدوري + الكأس + دوري الأبطال) لأول مرة للنادي."},
+  {icon:"🎼", name:"2009 — برشلونة السداسية", badge:"برشلونة 2-0 مان يونايتد", meta:"روما", desc:"فريق غوارديولا الأسطوري حقق ستة ألقاب في عام واحد بأسلوب كرة استثنائي."},
+  {icon:"🐉", name:"2004 — مفاجأة بورتو", badge:"بورتو 3-0 موناكو", meta:"جلزنكيرشن", desc:"مورينيو قاد فريقاً غير مرشح لإسقاط العمالقة وإحراز اللقب بأسلوب دفاعي محكم."}
+];
+
+/* =========================================================
+   2) الإعدادات والأقسام
+   ========================================================= */
+
+const TABS = [
+  {id:'overview',   label:'نظرة عامة',    icon:'🌍'},
+  {id:'clubs',      label:'الأندية',      icon:'🏆'},
+  {id:'coaches',    label:'المدربون',     icon:'🎩'},
+  {id:'forwards',   label:'المهاجمون',    icon:'⚽'},
+  {id:'midfielders',label:'لاعبو الوسط',  icon:'🎼'},
+  {id:'defenders',  label:'المدافعون',    icon:'🛡️'},
+  {id:'years',      label:'أفضل السنوات', icon:'✨'}
+];
+
+const SECTIONS = {
+  clubs: {
+    title:'🏆 أبرز الأندية في تاريخ البطولة',
+    sub:'العمالقة الذين صنعوا مجد الكأس ذات الأذنين الكبيرتين.',
+    data: clubs
+  },
+  coaches: {
+    title:'🎩 المدربون الأسطوريون',
+    sub:'العقول التي رسمت الخطط وقادت الفرق إلى المجد الأوروبي.',
+    data: coaches
+  },
+  forwards: {
+    title:'⚽ أعظم المهاجمين',
+    sub:'الهدافون الذين أرعبوا الدفاعات وسجّلوا أهدافاً لا تُنسى.',
+    data: forwards
+  },
+  midfielders: {
+    title:'🎼 أساتذة خط الوسط',
+    sub:'صنّاع اللعب ومديرو الإيقاع الذين تحكمّوا في المباريات.',
+    data: midfielders
+  },
+  defenders: {
+    title:'🛡️ المدافعون العظماء',
+    sub:'الجدران الصلبة والقادة الذين حموا مراميهم في أصعب الليالي.',
+    data: defenders
+  },
+  years: {
+    title:'✨ أفضل سنوات ونسخ البطولة',
+    sub:'ليالٍ خالدة دخلت تاريخ كرة القدم إلى الأبد.',
+    data: years
+  }
+};
+
+/* =========================================================
+   3) الحالة
+   ========================================================= */
+
+const state = { tab:'overview', q:'' };
+
+const contentEl  = document.getElementById('content');
+const tabsEl     = document.getElementById('tabs');
+const searchWrap = document.getElementById('searchWrap');
+const searchInput= document.getElementById('searchInput');
+
+/* =========================================================
+   4) بناء التبويبات
+   ========================================================= */
+
+function buildTabs(){
+  tabsEl.innerHTML = TABS.map(t => `
+    <button class="tab ${t.id === state.tab ? 'active' : ''}" data-tab="${t.id}">
+      ${t.icon} ${t.label}
+    </button>
+  `).join('');
+}
+
+tabsEl.addEventListener('click', e => {
+  const btn = e.target.closest('.tab');
+  if(!btn) return;
+  state.tab = btn.dataset.tab;
+  state.q = '';
+  searchInput.value = '';
+  buildTabs();
+  render();
+  window.scrollTo({ top: 0, behavior:'smooth' });
+});
+
+/* =========================================================
+   5) البحث
+   ========================================================= */
+
+searchInput.addEventListener('input', e => {
+  state.q = e.target.value;
+  render();
+});
+
+/* =========================================================
+   6) النظرة العامة
+   ========================================================= */
+
+function overviewHTML(){
+  return `
+    <div class="stats">
+      <div class="stat" style="animation-delay:.00s">
+        <div class="stat-num">1955</div>
+        <div class="stat-label">انطلاق البطولة<small>كأس الأندية الأوروبية</small></div>
+      </div>
+      <div class="stat" style="animation-delay:.06s">
+        <div class="stat-num" data-target="15">0</div>
+        <div class="stat-label">أكثر نادٍ تتويجاً<small>ريال مدريد</small></div>
+      </div>
+      <div class="stat" style="animation-delay:.12s">
+        <div class="stat-num" data-target="140">0</div>
+        <div class="stat-label">الهداف التاريخي<small>كريستيانو رونالدو</small></div>
+      </div>
+      <div class="stat" style="animation-delay:.18s">
+        <div class="stat-num" data-target="5">0</div>
+        <div class="stat-label">أكثر مدرب تتويجاً<small>كارلو أنشيلوتي</small></div>
+      </div>
+      <div class="stat" style="animation-delay:.24s">
+        <div class="stat-num" data-target="183">0</div>
+        <div class="stat-label">أكثر لاعب مشاركة<small>كريستيانو رونالدو</small></div>
+      </div>
+    </div>
+
+    <div class="intro">
+      <h2>🌍 ما هي بطولة دوري أبطال أوروبا؟</h2>
+      <p>
+        هي أشهر بطولة للأندية في العالم، انطلقت عام 1955 تحت اسم «كأس الأندية الأوروبية الأبطال»،
+        وتغيّر نظامها عام 1992 ليصبح «دوري أبطال أوروبا» بصيغة دوري المجموعات.
+        يشارك فيها أفضل الأندية الأوروبية بعد التأهل من الدوريات المحلية.
+      </p>
+      <p>
+        تُعرف بألقاب عديدة: «الكأس ذات الأذنين الكبيرتين»، «المسابقة الأغلى»،
+        و«حلم كل لاعب». وتُقام المباراة النهائية على ملعب محايد في أجواء استثنائية.
+      </p>
+      <p>
+        على مدار أكثر من 65 عاماً، صنعت البطولة أساطير خالدة: من دي ستيفانو وبوشكاش،
+        إلى كرويف وبكنباور، وصولاً إلى زيدان ورونالدو وميسي ومودريتش.
+      </p>
+    </div>
+
+    <h2 class="quick-title">🔎 اكتشف الأقسام</h2>
+    <div class="quick-grid">
+      ${TABS.filter(t => t.id !== 'overview').map(t => `
+        <button class="quick-btn" data-tab="${t.id}">${t.icon} ${t.label}</button>
+      `).join('')}
+    </div>
+  `;
+}
+
+/* =========================================================
+   7) بطاقات الأقسام
+   ========================================================= */
+
+function cardsHTML(list){
+  return list.map((it, i) => `
+    <article class="card" style="animation-delay:${Math.min(i*45, 450)}ms">
+      <span class="card-num">${String(i+1).padStart(2,'0')}</span>
+      <div class="card-top">
+        <span class="card-icon">${it.icon || '⭐'}</span>
+        ${it.badge ? `<span class="card-badge">${it.badge}</span>` : ''}
+      </div>
+      <h3 class="card-title">${it.name}</h3>
+      ${it.meta ? `<p class="card-meta">${it.meta}</p>` : ''}
+      <p class="card-desc">${it.desc}</p>
+    </article>
+  `).join('');
+}
+
+/* =========================================================
+   8) العدّاد المتحرك
+   ========================================================= */
+
+function animateCounters(){
+  document.querySelectorAll('.stat-num[data-target]').forEach(el => {
+    const target = parseInt(el.dataset.target, 10);
+    const step = Math.max(1, Math.ceil(target / 35));
+    let current = 0;
+
+    const timer = setInterval(() => {
+      current += step;
+      if(current >= target){
+        current = target;
+        clearInterval(timer);
+      }
+      el.textContent = current;
+    }, 28);
+  });
+}
+
+/* =========================================================
+   9) الرسم الرئيسي
+   ========================================================= */
+
+function render(){
+  const q = state.q.trim().toLowerCase();
+
+  /* --- النظرة العامة --- */
+  if(state.tab === 'overview'){
+    searchWrap.style.display = 'none';
+    contentEl.innerHTML = overviewHTML();
+    animateCounters();
+    return;
+  }
+
+  searchWrap.style.display = 'block';
+  const section = SECTIONS[state.tab];
+
+  /* --- التصفية --- */
+  const list = section.data.filter(it => {
+    if(!q) return true;
+    const haystack = [it.name, it.meta, it.desc, it.badge]
+      .filter(Boolean).join(' ').toLowerCase();
+    return haystack.includes(q);
+  });
+
+  const head = `
+    <div class="sec-head">
+      <h2>${section.title}</h2>
+      <p>${section.sub}</p>
+    </div>`;
+
+  if(list.length === 0){
+    contentEl.innerHTML = head + `
+      <div class="empty">
+        <span class="big">🔍</span>
+        <p>لا توجد نتائج مطابقة لـ «${state.q}»</p>
+      </div>`;
+    return;
+  }
+
+  contentEl.innerHTML = head + `<div class="grid">${cardsHTML(list)}</div>`;
+}
+
+/* =========================================================
+   10) أزرار «اكتشف الأقسام» داخل النظرة العامة
+   ========================================================= */
+
+contentEl.addEventListener('click', e => {
+  const btn = e.target.closest('.quick-btn');
+  if(!btn) return;
+  state.tab = btn.dataset.tab;
+  state.q = '';
+  searchInput.value = '';
+  buildTabs();
+  render();
+  window.scrollTo({ top: 0, behavior:'smooth' });
+});
+
+/* =========================================================
+   11) الإقلاع
+   ========================================================= */
+
+buildTabs();
+render();
+</script>
+</body>
+  </html>
